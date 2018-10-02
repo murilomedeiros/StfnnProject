@@ -1,6 +1,8 @@
 console.log('Yet another Hello world');
 
 var map = null;
+var lastMarker = null;
+var lastInfoWindow = null;
 
 placesOfInterest = [
     { name: 'Charme da paulista', lat: -23.562172, lng: -46.655794 },
@@ -26,6 +28,15 @@ const customIcon = {
     strokeWeight: 3
 };
 
+const clickIcon = {
+    path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
+    fillColor: '#FFFFFF',
+    fillOpacity: 0.98,
+    scale: 0.98,
+    strokeColor: '#666666',
+    strokeWeight: 3
+}
+
 function addMarker(marker) {
     var marker = new google.maps.Marker({
         map: map,
@@ -33,6 +44,27 @@ function addMarker(marker) {
         icon: customIcon,
         title: marker.name
     });
+    var infoWindow = new google.maps.InfoWindow({
+        enableEventPropagation: true,
+    });
+    marker.addListener('click', function () {
+        if (lastMarker) {
+            lastMarker.setIcon(customIcon);
+            lastInfoWindow.close();
+        }
+        infoWindow.setContent(marker.title);
+        infoWindow.open(map, marker);
+        marker.setIcon(clickIcon);
+        lastMarker2(marker, infoWindow);
+    });
+    google.maps.event.addListener(infoWindow, 'closeclick', function () {
+        marker.setIcon(customIcon);
+    });
+}
+
+function lastMarker2(marker, infoWindow) {
+    lastMarker = marker
+    lastInfoWindow = infoWindow
 }
 
 function initMap() {
@@ -53,8 +85,22 @@ function initMap() {
 
     };
 
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    // var controlMarkerUI = document.createElement('DIV');
+    // controlMarkerUI.style.cursor = 'pointer';
+    // controlMarkerUI.style.backgroundImage = "url(http://localhost/marker.png)";
+    // controlMarkerUI.style.height = '28px';
+    // controlMarkerUI.style.width = '25px';
+    // controlMarkerUI.style.top = '11px';
+    // controlMarkerUI.style.left = '120px';
+    // controlMarkerUI.title = 'Click to set the map to Home';
 
-    //Adicionando o primeiro marcador como exemplo
-    addMarker(placesOfInterest[0]);
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    //Adicionando todos os marcadores
+    placesOfInterest.forEach(addAllmarkers);
+}
+
+
+
+function addAllmarkers(element, index, array) {
+    addMarker(placesOfInterest[index]);
 }
