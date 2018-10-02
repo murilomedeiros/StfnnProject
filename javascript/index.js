@@ -85,7 +85,7 @@ function initMap() {
 
     };
 
-     var controlMarkerUI = document.createElement('DIV');
+    //var controlMarkerUI = document.createElement('DIV');
     // controlMarkerUI.style.cursor = 'pointer';
     // controlMarkerUI.style.backgroundImage = "url(http://localhost/marker.png)";
     // controlMarkerUI.style.height = '28px';
