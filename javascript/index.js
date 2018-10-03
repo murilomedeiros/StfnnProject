@@ -85,21 +85,42 @@ function initMap() {
 
     };
 
-    //var controlMarkerUI = document.createElement('DIV');
-    // controlMarkerUI.style.cursor = 'pointer';
-    // controlMarkerUI.style.backgroundImage = "url(http://localhost/marker.png)";
-    // controlMarkerUI.style.height = '28px';
-    // controlMarkerUI.style.width = '25px';
-    // controlMarkerUI.style.top = '11px';
-    // controlMarkerUI.style.left = '120px';
-    // controlMarkerUI.title = 'Click to set the map to Home';
-
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     //Adicionando todos os marcadores
     placesOfInterest.forEach(addAllmarkers);
+
+    var centerControlDiv = document.createElement('div');
+    var centerControl = new CenterControl(centerControlDiv, map);
+
+    centerControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
 }
 
 
+function CenterControl(controlDiv, map) {
+    
+    // Set CSS for the control interior.
+    var controlText = document.createElement('div');
+    controlText.style.color = 'rgb(25,25,25)';
+    controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+    controlText.style.fontSize = '16px';
+    controlText.style.lineHeight = '38px';
+    controlText.style.paddingLeft = '5px';
+    controlText.style.paddingRight = '5px';
+    controlText.innerHTML = 'Center Map';
+    controlUI.appendChild(controlText);
+
+    // Setup the click event listeners: simply set the map to Chicago.
+    controlUI.addEventListener('click', function () {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    });
+
+}
+
+function showPosition(position) {
+    map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+    addMarker({ name: 'Sua Localização', lat: position.coords.latitude, lng: position.coords.longitude });
+}
 
 function addAllmarkers(element, index, array) {
     addMarker(placesOfInterest[index]);
