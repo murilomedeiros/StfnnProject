@@ -88,7 +88,6 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     //Adicionando todos os marcadores
     placesOfInterest.forEach(addAllmarkers);
-
     var centerControlDiv = document.createElement('div');
     var centerControl = new CenterControl(centerControlDiv, map);
 
@@ -98,7 +97,19 @@ function initMap() {
 
 
 function CenterControl(controlDiv, map) {
-    
+
+    // Set CSS for the control border.
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#fff';
+    controlUI.style.border = '2px solid #fff';
+    controlUI.style.borderRadius = '3px';
+    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.marginBottom = '22px';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'Click to recenter the map';
+    controlDiv.appendChild(controlUI);
+
     // Set CSS for the control interior.
     var controlText = document.createElement('div');
     controlText.style.color = 'rgb(25,25,25)';
@@ -107,7 +118,7 @@ function CenterControl(controlDiv, map) {
     controlText.style.lineHeight = '38px';
     controlText.style.paddingLeft = '5px';
     controlText.style.paddingRight = '5px';
-    controlText.innerHTML = 'Center Map';
+    controlText.innerHTML = 'Sua Localização';
     controlUI.appendChild(controlText);
 
     // Setup the click event listeners: simply set the map to Chicago.
@@ -119,7 +130,7 @@ function CenterControl(controlDiv, map) {
 
 function showPosition(position) {
     map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-    addMarker({ name: 'Sua Localização', lat: position.coords.latitude, lng: position.coords.longitude });
+    addMarker({ name: 'Você', lat: position.coords.latitude, lng: position.coords.longitude });
 }
 
 function addAllmarkers(element, index, array) {
