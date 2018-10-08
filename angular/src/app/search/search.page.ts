@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { legends } from '../names/nameslist';
 
 @Component({
   selector: 'app-search',
@@ -6,14 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['search.page.scss']
 })
 export class SearchPage {
-  searchInput : string;
+  legends: Array<string> = [];
+  searchInput: string;
   results = [];
 
   ngOnInit() {
+    this.legends = legends;
   }
 
   onSearch() {
-    console.log(`Search: ${this.searchInput}`)
-    
+    if (this.searchInput) {
+      this.results = this.legends.filter(legend =>
+        legend.substring(0, this.searchInput.length).toUpperCase().includes(this.searchInput.toUpperCase()));
+    } else {
+      this.results = [];
+    }
   }
 }

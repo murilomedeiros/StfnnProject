@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { legends } from '../names/nameslist';
+
 
 @Component({
   selector: 'app-list',
@@ -8,7 +10,9 @@ import { Component } from '@angular/core';
 export class ListPage {
   legends: Array<string> = [];
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
+    this.legends = legends;
 
   }
 }
