@@ -10,9 +10,14 @@ import { legends } from '../names/nameslist';
 export class ListPage {
   legends: Array<string> = [];
 
-  // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     this.legends = legends;
 
+  }
+
+  reorderItems(indexes) {
+    const element = this.legends[indexes.from];
+    this.legends.splice(indexes.from, 1);
+    this.legends.splice(indexes.to, 0, element);
   }
 }

@@ -8,13 +8,13 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6" offset="3">
-        <ion-list>
+        <!-- Tentei usar o reorder porém não funcionou D:
+            https://ionicframework.com/docs/api/components/item/ItemReorder/ -->
+        <ion-list reorder="true">
           <ion-list-header>
             <ion-label>List of Names</ion-label>
           </ion-list-header>
-          <ion-item *ngFor="let name of legends" lines="full">
-            {{name}}
-          </ion-item>
+          <ion-item *ngFor="let name of legends" lines="full">{{name}}</ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
